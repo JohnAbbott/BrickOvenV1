@@ -17,6 +17,7 @@
 #define MAXCLK  9
 
 LiquidCrystal_I2C lcd(0x3F,20,4);
+LiquidCrystal_I2C lcd2(0x27,20,4);
 // A5 (SCL) and A4 (SDA).
 
 // initialize the Thermocouple
@@ -46,6 +47,10 @@ void setup(){
   lcd.init();                      // initialize the lcd 
   lcd.init();
   lcd.backlight();
+// initialize and clear display
+  lcd2.init();                      // initialize the lcd 
+  lcd2.init();
+  lcd2.backlight();
 
 delay(500);
   Serial.print("Initializing sensor...");
@@ -60,7 +65,7 @@ delay(500);
 void loop(){
 
   //Loop through and read all 16 values
-  for(int i = 0; i < 3; i ++){
+  for(int i = 0; i < 4; i ++){
     Serial.print("Channel ");
     Serial.println(i);
     readMux(i);
@@ -105,6 +110,10 @@ void loop(){
      lcd.print("     ");
      lcd.setCursor(13,2);
      lcd.print(currentTemp);
+    } else if (i == 3){
+      Serial.println("inside display to second LCD");
+      lcd2.setCursor(1, 1);
+      lcd2.print("hello");
     }
    
    }
